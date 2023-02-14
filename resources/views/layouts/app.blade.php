@@ -100,27 +100,22 @@
                             @endif
                         @else
 
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{ route('admin.home') }}" ><i class="fa fa-th"></i>Home</a>
+                            </li>
 
-                        <li class="nav-item">
-                        <a  class="nav-link" href="{{ url('/home') }}" ><i class="fa fa-th"></i> Home</a>
-                        </li>
-                        <li class="nav-item">
-                        <a  class="nav-link" href="{{route('estagiovaga.index')}}" ><i class="fa fa-graduation-cap"></i> Estágio</a>
-                        </li>
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{ route('vaga.index') }}" ><i class="fa fa-book"></i>Vagas</a>
+                            </li>
 
-                        <li class="nav-item">
-                        <a  class="nav-link" href="{{url('/projeto')}}" ><i class="fa fa-book"></i>Emprego</a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link" href="#" ></i>|</a>
-                        </li>
+                            <li class="nav-item">
+                                <a  class="nav-link" href="#" ></i>|</a>
+                            </li>
                         
-                        <li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
-                                
-
                                 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{url('/password/reset2')}}">
@@ -148,18 +143,13 @@
             </div>
         </nav>
 
-
-
         <main class="py-4">
             @yield('content')
         </main>
     </div>
 
-
-
     <!-- Footer-->
     <footer class="bg-light text-center text-white" >
-    
     
     <!-- Grid container 
 
@@ -206,13 +196,10 @@
 
   <!-- Copyright -->
   <div class="text-center p-3 text-black shadow-sm" style="background-color: #67a8cd;">
-      <strong>Banco de Oportunidades </strong> - Desenvolvido por Rogério Canto 
+      <strong>Banco de Oportunidades</strong> - Desenvolvido por Rogério Canto 
   </div>
     <!-- Copyright -->
 </footer>
-
-
-
 
 </body>
 </html>

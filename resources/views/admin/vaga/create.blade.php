@@ -10,7 +10,7 @@
                Preencha as informações abaixo de forma detalhada e ao final clique no botão "cadastrar" para que a vaga seja disponibilizada em nosso sistema.
             </p>
 
-            <form method="POST" action="{{ route('estagiovaga.store') }}">
+            <form method="POST" action="{{ route('vaga.store') }}">
                 @csrf
 
             <div class="card mb-3">

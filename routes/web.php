@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\VagaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\MensagemAppMail;
 
 
@@ -10,25 +12,18 @@ Route::get('/', function () {
     return view('principal');
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home')
-    ->middleware('verified');
+Route::prefix('admin')
+        ->middleware('auth')
+        ->group(function() {
 
-Route::resource('estagiovaga', 'App\Http\Controllers\EstagioVagaController')
-    ->middleware('verified');
+    Route::get('/home', [HomeController::class, 'index'])->name('admin.home');
 
-Route::resource('empresa', 'App\Http\Controllers\EmpresaController')
-    ->middleware('verified');
-
-
-
-    
+    Route::resource('vaga', VagaController::class)->middleware(['can:empresa,estagio']);
+    Route::resource('empresa', EmpresaController::class)->middleware(['can:empresa,estagio']);
+});
 
 Route::get('/mensagem-app', function() {
 	return new MensagemAppMail();
-   // Mail::to('rogerio.canto@ifmg.edu.br')->send(new MensagemAppMail());
-    //return 'E-mail enviado com sucesso';
 });
-

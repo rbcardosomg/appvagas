@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
@@ -24,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'empresa_id',
+        'perfil'
     ];
 
     /**
@@ -53,5 +53,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
        $this->notify(new VerificarEmailNotification($this->name));  
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasPerfil(Perfil::ADMIN);
+    }
+
+    public function hasPerfil(Perfil $perfil): bool
+    {
+        return $this->perfil === $perfil->getName();
     }
 }

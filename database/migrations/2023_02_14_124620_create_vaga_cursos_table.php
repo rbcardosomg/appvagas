@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AjusteVagasCursos extends Migration
+class CreateVagaCursosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,13 @@ class AjusteVagasCursos extends Migration
      */
     public function up()
     {
-        Schema::create('cursos', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome', 100);
-            $table->string('tipo', 100);            
-            $table->timestamps();
-        });
-
         Schema::create('vaga_cursos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('curso_id');
-            $table->unsignedBigInteger('estagiovaga_id');            
-            $table->timestamps();
-
+            $table->unsignedBigInteger('vaga_id');            
             $table->foreign('curso_id')->references('id')->on('cursos');
-            $table->foreign('estagiovaga_id')->references('id')->on('estagiovagas');
+            $table->foreign('vaga_id')->references('id')->on('vagas');
+            $table->timestamps();
         });
     }
 
@@ -38,6 +30,6 @@ class AjusteVagasCursos extends Migration
      */
     public function down()
     {
-        
+        Schema::dropIfExists('vaga_cursos');
     }
 }

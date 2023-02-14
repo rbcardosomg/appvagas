@@ -8,7 +8,7 @@
             <p class="lead">
                Preencha as informações abaixo de forma detalhada e ao final clique no botão "atualizar" para que a vaga seja disponibilizada em nosso sistema.
             </p>
-            <form method="POST" action="{{ route('estagiovaga.update',['estagiovaga'=> $estagiovaga->id ]) }}">
+            <form method="POST" action="{{ route('vaga.update',['vaga'=> $vaga->id ]) }}">
                 @csrf
                 @method('PUT')
 
@@ -73,16 +73,16 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <label  class="form-label">Área de atuação</label>
-                                <input type="text" class="form-control" name="area_atuacao" value="{{ $estagiovaga->area_atuacao }}">
+                                <input type="text" class="form-control" name="area_atuacao" value="{{ $vaga->area_atuacao }}">
                                 </div>
                                 <div class="mb-3 row">                                
                                     <div class="col">
                                     <label  class="form-label">Remuneração</label>
-                                    <input type="text" class="form-control" name="remuneracao" value="{{ $estagiovaga->remuneracao }}">
+                                    <input type="text" class="form-control" name="remuneracao" value="{{ $vaga->remuneracao }}">
                                     </div>
                                     <div class="col">
                                     <label  class="form-label">Prazo: (Especificar data limite para o contato, caso houver.)</label>
-                                    <input type="date" class="form-control" name="data_limite_procura" value="{{ $estagiovaga->data_limite_procura }}">
+                                    <input type="date" class="form-control" name="data_limite_procura" value="{{ $vaga->data_limite_procura }}">
                                     </div>
                                 </div> <!-- fim row -->
                                
@@ -98,15 +98,15 @@
                                 <div class="mb-3 row">                                
                                     <div class="col">
                                     <label  class="form-label">Email</label>
-                                    <input type="text" class="form-control" name="contato_email" value="{{ $estagiovaga->contato_email }}">
+                                    <input type="text" class="form-control" name="contato_email" value="{{ $vaga->contato_email }}">
                                     </div>
                                     <div class="col">
                                     <label  class="form-label">Telefone</label>
-                                    <input type="text" class="form-control" name="contato_telefone" value="{{ $estagiovaga->contato_telefone }}">
+                                    <input type="text" class="form-control" name="contato_telefone" value="{{ $vaga->contato_telefone }}">
                                     </div>
                                 </div> <!-- fim row -->
                                 <label  class="form-label">Link para o cadastro de seleção</label>
-                                <input type="text" class="form-control" name="contato_link" value="{{ $estagiovaga->contato_link }}">
+                                <input type="text" class="form-control" name="contato_link" value="{{ $vaga->contato_link }}">
                                 </div>
                              
                     
@@ -119,16 +119,16 @@
                             
                                 <div class="mb-3">
                                     <label class="form-label">Requisitos</label>
-                                    <textarea class="form-control" rows="6" name="requisitos">{{ $estagiovaga->requisitos }}</textarea>
+                                    <textarea class="form-control" rows="6" name="requisitos">{{ $vaga->requisitos }}</textarea>
                                     </div>
                                     <div class="mb-3">
                                     <label class="form-label">Descrição das atividades previstas</label>
-                                    <textarea class="form-control" rows="6" name="descricao">{{ $estagiovaga->descricao }}</textarea>
+                                    <textarea class="form-control" rows="6" name="descricao">{{ $vaga->descricao }}</textarea>
                                     </div>                            
                                     
                                     <div class="mb-3">
                                     <label class="form-label">Observações</label>
-                                    <textarea class="form-control" rows="6" name="observacoes">{{ $estagiovaga->observacoes }}</textarea>
+                                    <textarea class="form-control" rows="6" name="observacoes">{{ $vaga->observacoes }}</textarea>
                                     </div>                           
         
                         </div><!-- fim card body -->

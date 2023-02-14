@@ -3,10 +3,9 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\EstagioVaga;
+use App\Models\Vaga;
 
 class NovaOportunidadeMail extends Mailable
 {
@@ -19,11 +18,11 @@ class NovaOportunidadeMail extends Mailable
      *
      * @return void
      */
-    public function __construct(EstagioVaga $estagiovaga)
+    public function __construct(Vaga $vaga)
     {
-        $this->area_atuacao = $estagiovaga->area_atuacao;
-        $this->data_limite_procura = date('d/m/Y', strtotime($estagiovaga->data_limite_procura));
-        $this->url = 'http://appvagas.test/estagiovaga/'.$estagiovaga->id;
+        $this->area_atuacao = $vaga->area_atuacao;
+        $this->data_limite_procura = date('d/m/Y', strtotime($vaga->data_limite_procura));
+        $this->url = 'http://appvagas.develop/vaga/'.$vaga->id;
     }
 
     /**

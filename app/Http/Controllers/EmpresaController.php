@@ -7,13 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
-{
-    
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
+{   
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +22,9 @@ class EmpresaController extends Controller
         
         
         if (is_null($empresa_id)){
-            return view('empresa.create');            
+            return view('admin.empresa.create');            
         } else {
-            return view('empresa.index', ['empresa'=>$empresa]);
+            return view('admin.empresa.index', ['empresa'=>$empresa]);
         }
     }
 
@@ -41,7 +35,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        return view('empresa.create');
+        return view('admin.empresa.create');
     }
 
     /**
@@ -63,7 +57,7 @@ class EmpresaController extends Controller
         $userfind->fill(['empresa_id'=>$empresa->id]);
         $userfind->save();
        
-        return redirect()->route('empresa.show', ['empresa' => $empresa->id]);    
+        return redirect()->route('admin.empresa.show', ['empresa' => $empresa->id]);    
            
     }
 
@@ -75,7 +69,7 @@ class EmpresaController extends Controller
      */
     public function show(Empresa $empresa)
     {
-        return view('empresa.show', ['empresa' => $empresa]);
+        return view('admin.empresa.show', ['empresa' => $empresa]);
     }
 
     /**
@@ -87,7 +81,7 @@ class EmpresaController extends Controller
     public function edit(Empresa $empresa)
     {
                
-        return view('empresa.edit', ['empresa' => $empresa]);
+        return view('admin.empresa.edit', ['empresa' => $empresa]);
     }
 
     /**
@@ -105,7 +99,7 @@ class EmpresaController extends Controller
         
         $empresa->update($request->all());
 
-        return redirect()->route('empresa.show', ['empresa'=> $empresa->id]);
+        return redirect()->route('admin.empresa.show', ['empresa'=> $empresa->id]);
     }
 
     /**

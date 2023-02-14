@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Perfil;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +27,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function(User $user){
+            if($user->isAdmin())
+                return true;
+        });
+
+        Gate::define('estagio', function(User $user){
+            return $user->hasPerfil(Perfil::SETOR_ESTAGIO);
+        });
+
+        Gate::define('ensino', function(User $user){
+            return $user->hasPerfil(Perfil::SETOR_ENSINO);
+        });
+
+        Gate::define('empresa', function(User $user){
+            return $user->hasPerfil(Perfil::EMPRESA);
+        });
     }
 }

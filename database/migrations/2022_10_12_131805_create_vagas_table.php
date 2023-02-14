@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEstagiovagasTable extends Migration
+class CreateVagasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateEstagiovagasTable extends Migration
      */
     public function up()
     {
-        Schema::create('estagiovagas', function (Blueprint $table) {
+        Schema::create('vagas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->char('tipo',1);
             $table->string('area_atuacao', 200);        
             $table->string('remuneracao', 200)->nullable();
             $table->string('contato_email', 200)->nullable();
@@ -23,8 +25,9 @@ class CreateEstagiovagasTable extends Migration
             $table->date('data_limite_procura')->nullable();
             $table->text('requisitos')->nullable();
             $table->text('descricao')->nullable();
-            $table->string('observacoes', 10000)->nullable();
-            $table->string('vaga_aprovada',100)->nullable();
+            $table->string('observacoes')->nullable();
+            $table->boolean('vaga_aprovada')->default(false);
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -36,6 +39,6 @@ class CreateEstagiovagasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estagiovagas');
+        Schema::dropIfExists('vagas');
     }
 }

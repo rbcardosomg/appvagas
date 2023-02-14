@@ -26,12 +26,6 @@ class CreateEmpresasTable extends Migration
             $table->string('estado', 50);
             $table->timestamps();
         });
-
-        //adicionar o relacionamento com a tabela
-        Schema::table('users', function(Blueprint $table) {
-            $table->unsignedBigInteger('empresa_id')->nullable();
-            $table->foreign('empresa_id')->references('id')->on('empresas');
-        });
     }
 
     /**
@@ -40,13 +34,7 @@ class CreateEmpresasTable extends Migration
      * @return void
      */
     public function down()
-    {
-
-        Schema::table('users', function(Blueprint $table){
-            $table->dropForeign('users_empresa_id_foreign');
-            $table->dropColumn('empresa_id');
-        });
-        
+    {        
         Schema::dropIfExists('empresas');
     }
 }

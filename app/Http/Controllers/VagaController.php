@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 //use Mail;
 use App\Mail\NovaOportunidadeMail;
-use App\Models\EstagioVaga;
+use App\Models\Vaga;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-class EstagioVagaController extends Controller
+class VagaController extends Controller
 {   
     
     public function __construct()
@@ -24,9 +23,15 @@ class EstagioVagaController extends Controller
      */
     public function index()
     {
-        $user_id = auth()->user()->id;
-        $estagiovagas= EstagioVaga::where('user_id', $user_id)->paginate(10);
-        return view('estagiovaga.index', ['estagiovagas'=>$estagiovagas]);
+        if(auth()->user()->isAdmin())
+            $vagas = Vaga::paginate();
+        else
+        {
+            $user_id = auth()->user()->id;
+            $vagas = Vaga::where('user_id', $user_id)->paginate();
+        }
+        
+        return view('admin.vaga.index', ['vagas'=>$vagas]);
     }
 
     /**
@@ -36,7 +41,7 @@ class EstagioVagaController extends Controller
      */
     public function create()
     {
-        return view('estagiovaga.create');
+        return view('admin.vaga.create');
     }
 
     /**
@@ -52,78 +57,77 @@ class EstagioVagaController extends Controller
         $dados['user_id'] = auth()->user()->id;
         $dados['vaga_aprovada'] = 'Em análise';
         
-        $estagiovaga = EstagioVaga::create($dados);
+        $vaga = Vaga::create($dados);
         //$destinario = auth()->user()->email; //e-mail do usuário logado (autenticado)
-        $destinario='rogerio.canto@ifmg.edu.br';
-        Mail::to($destinario)->send(new NovaOportunidadeMail($estagiovaga));
+        $destinario='rafael.cardoso@ifmg.edu.br';
+        Mail::to($destinario)->send(new NovaOportunidadeMail($vaga));
 
-        return redirect()->route('estagiovaga.show', ['estagiovaga' => $estagiovaga->id]);
+        return redirect()->route('admin.vaga.show', ['vaga' => $vaga->id]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\EstagioVaga  $estagioVaga
+     * @param  \App\Models\Vaga  $vaga
      * @return \Illuminate\Http\Response
      */
-    public function show(EstagioVaga $estagiovaga)
+    public function show(Vaga $vaga)
     {
-        return view('estagiovaga.show', ['estagiovaga' => $estagiovaga]);
+        return view('admin.vaga.show', ['vaga' => $vaga]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\EstagioVaga  $estagioVaga
+     * @param  \App\Models\Vaga  $vaga
      * @return \Illuminate\Http\Response
      */
-    public function edit(EstagioVaga $estagiovaga)
+    public function edit(Vaga $vaga)
     {
         
-        if($estagiovaga->user_id != auth()->user()->id) {
-            return view('acesso-negado');            
+        if($vaga->user_id != auth()->user()->id) {
+            return view('acesso-negado');
         }
 
-        return view('estagiovaga.edit', ['estagiovaga' => $estagiovaga]);       
+        return view('admin.vaga.edit', ['vaga' => $vaga]);       
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\EstagioVaga  $estagioVaga
+     * @param  \App\Models\Vaga  $vaga
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EstagioVaga $estagiovaga)
+    public function update(Request $request, Vaga $vaga)
     {
        
-        if($estagiovaga->user_id != auth()->user()->id) {
+        if($vaga->user_id != auth()->user()->id) {
             return view('acesso-negado');
         }       
         
-        $estagiovaga->update($request->all());
+        $vaga->update($request->all());
 
         //$destinario = auth()->user()->email; //e-mail do usuário logado (autenticado)
-        $destinario='rogerio.canto@ifmg.edu.br';
-        Mail::to($destinario)->send(new NovaOportunidadeMail($estagiovaga));
+        $destinario='rafael.cardoso@ifmg.edu.br';
+        Mail::to($destinario)->send(new NovaOportunidadeMail($vaga));
 
-        return redirect()->route('estagiovaga.show', ['estagiovaga'=> $estagiovaga->id]);       
-
+        return redirect()->route('admin.vaga.show', ['vaga'=> $vaga->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\EstagioVaga  $estagioVaga
+     * @param  \App\Models\Vaga  $vaga
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EstagioVaga $estagiovaga)
+    public function destroy(Vaga $vaga)
     {
-        if($estagiovaga->user_id != auth()->user()->id) {
+        if($vaga->user_id != auth()->user()->id) {
             return view('acesso-negado');
         }
 
-        $estagiovaga->delete();
-        return redirect()->route('estagiovaga.index');
+        $vaga->delete();
+        return redirect()->route('admin.vaga.index');
     }
 }
