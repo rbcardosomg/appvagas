@@ -45,7 +45,15 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('empresa', function(User $user){
-            return $user->hasPerfil(Perfil::EMPRESA);
+            return $user->hasPerfil(Perfil::EMPRESA) || $user->hasPerfil(Perfil::SETOR_ESTAGIO);
+        });
+
+        Gate::define('vaga', function(User $user){
+            return $user->hasPerfil(Perfil::EMPRESA) || $user->hasPerfil(Perfil::SETOR_ESTAGIO);
+        });
+
+        Gate::define('usuario', function(User $user){
+            return $user->hasPerfil(Perfil::SETOR_ESTAGIO);
         });
     }
 }

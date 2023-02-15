@@ -4,18 +4,14 @@ namespace App\Http\Controllers;
 
 //use Mail;
 use App\Mail\NovaOportunidadeMail;
+use App\Models\Curso;
+use App\Models\Perfil;
 use App\Models\Vaga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class VagaController extends Controller
-{   
-    
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
+{    
     /**
      * Display a listing of the resource.
      *
@@ -23,13 +19,13 @@ class VagaController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->isAdmin())
-            $vagas = Vaga::paginate();
-        else
+        if(auth()->user()->hasPerfil(Perfil::EMPRESA))
         {
             $user_id = auth()->user()->id;
             $vagas = Vaga::where('user_id', $user_id)->paginate();
         }
+        else
+            $vagas = Vaga::paginate();
         
         return view('admin.vaga.index', ['vagas'=>$vagas]);
     }
@@ -41,7 +37,8 @@ class VagaController extends Controller
      */
     public function create()
     {
-        return view('admin.vaga.create');
+        $cursos = Curso::all();
+        return view('admin.vaga.create', ['cursos'=>$cursos]);
     }
 
     /**
@@ -52,8 +49,8 @@ class VagaController extends Controller
      */
     public function store(Request $request)
     {
-        
         $dados = $request->all();
+        $cursos = $request->cursos;
         $dados['user_id'] = auth()->user()->id;
         $dados['vaga_aprovada'] = 'Em análise';
         
@@ -84,7 +81,8 @@ class VagaController extends Controller
      */
     public function edit(Vaga $vaga)
     {
-        
+        //$cursos = Curso::all();
+
         if($vaga->user_id != auth()->user()->id) {
             return view('acesso-negado');
         }

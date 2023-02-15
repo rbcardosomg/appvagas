@@ -43,8 +43,16 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email',
+            'perfil' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+
         $fields = $request->all();
         $fields['password'] = Hash::make($fields['password']);
+
         User::create($fields);
         return redirect(route('usuario.index'));
     }
@@ -82,10 +90,18 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'perfil' => 'required',
+            'password' => 'confirmed'
+        ]);
+
         $usuario = User::findOrFail($id);
         $usuario->name = $request->name;
         $usuario->email = $request->email;
-        $usuario->password = Hash::make($request->password);
+        if($request->filled('password'))
+            $usuario->password = Hash::make($request->password);
         $usuario->perfil = $request->perfil;
         $usuario->save();
 

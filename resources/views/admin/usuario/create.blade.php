@@ -33,13 +33,13 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Confirmação da Senha</label>
-                                    <input type="password" class="form-control" name="confirm">
+                                    <input type="password" class="form-control" name="password_confirmation">
                                 </div>
                                 @can('admin')
                                     <div class="mb-3">
                                         <label class="form-label">Perfil</label>
                                         <select class="form-select" aria-label="Selecione o perfil" id="perfil" name="perfil">
-                                            <option>...</option>
+                                            <option></option>
                                             @foreach ($perfis as $perfil)
                                                 @if ((old('perfil') == $perfil->name))
                                                     <option value="{{$perfil->name}}" selected>{{$perfil->name}}</option>

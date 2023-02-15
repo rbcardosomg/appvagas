@@ -23,9 +23,9 @@ Route::prefix('admin')
 
     Route::get('/home', [HomeController::class, 'index'])->name('admin.home');
 
-    Route::resource('vaga', VagaController::class)->middleware(['can:empresa,estagio']);
-    Route::resource('empresa', EmpresaController::class)->middleware(['can:empresa,estagio']);
-    Route::resource('usuario', UsuarioController::class)->middleware(['can:estagio']);
+    Route::resource('vaga', VagaController::class)->middleware('can:vaga');
+    Route::resource('empresa', EmpresaController::class)->middleware('can:empresa');
+    Route::resource('usuario', UsuarioController::class)->middleware('can:usuario');
 });
 
 Route::get('/mensagem-app', function() {

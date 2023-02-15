@@ -97,11 +97,13 @@
                                     <a  class="nav-link" href="{{ route('admin.home') }}" ><i class="fa fa-th"></i>Home</a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a  class="nav-link" href="{{ route('vaga.index') }}" ><i class="fa fa-book"></i>Vagas</a>
-                                </li>
+                                @can('vaga')
+                                    <li class="nav-item">
+                                        <a  class="nav-link" href="{{ route('vaga.index') }}" ><i class="fa fa-book"></i>Vagas</a>
+                                    </li>
+                                @endcan
 
-                                @can('estagio')
+                                @can('usuario')
                                     <li class="nav-item">
                                         <a  class="nav-link" href="{{ route('usuario.index') }}" ><i class="fa fa-book"></i>Usuários</a>
                                     </li>
@@ -143,6 +145,15 @@
             </nav>
 
             <main class="py-4">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @yield('content')
             </main>
         </div>
