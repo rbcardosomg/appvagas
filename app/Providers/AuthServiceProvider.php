@@ -32,6 +32,10 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
         });
 
+        Gate::define('admin', function(User $user){
+            return $user->isAdmin();
+        });
+
         Gate::define('estagio', function(User $user){
             return $user->hasPerfil(Perfil::SETOR_ESTAGIO);
         });

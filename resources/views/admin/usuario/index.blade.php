@@ -1,0 +1,57 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header" style="background-color: #ffcb6b;" >Usuários<a href="{{route('usuario.create')}}" class="m-2">Novo</a></div>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                    <th scope="col">Nome</th>                            
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Perfil</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>                        
+                  </tr>
+              </thead>
+              <tbody>
+                @foreach ($usuarios as $usuario)
+                  <tr>
+                    <th scope="row">{{ $usuario['id'] }}</th>
+                    <td>{{ $usuario->name }}</td>                                
+                    <td>{{ $usuario->email }}</td>
+                    <td>{{ $usuario->perfil }}
+                    <td><a href="{{ route('usuario.edit', $usuario->id) }}">Editar</a></td>
+                    <td>
+                      <form id="form_{{ $usuario->id }}" method="post" action="{{ route('usuario.destroy', ['usuario' =>$usuario->id]) }}">
+                        @method('DELETE')
+                        @csrf
+                      </form>
+                      <a href="#" onclick="document.getElementById('form_{{ $usuario->id }}').submit()">Excluir</a>
+                    </td>                         
+                  </tr>    
+                @endforeach
+              </tbody>
+            </table>
+
+            <nav>
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{{ $usuarios->previousPageUrl() }}">Voltar</a></li>
+                @for($i=1; $i <= $usuarios->lastPage(); $i++)
+                  <li class="page-item {{ $usuarios->currentPage() == $i ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $usuarios->url($i) }}">{{ $i }}</a>
+                  </li>
+                @endfor
+                <li class="page-item"><a class="page-link" href="{{$usuarios->nextPageUrl() }}">Avançar</a></li>
+              </ul>
+            </nav>
+          </div> <!--fim card body-->
+        </div> <!--fim card-->
+      </div>
+    </div>
+  </div>
+@endsection
