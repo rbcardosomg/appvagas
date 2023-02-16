@@ -12,5 +12,10 @@ class Vaga extends Model
     protected $table = "vagas";
 
     protected $fillable = ['area_atuacao','remuneracao', 'data_limite_procura', 'contato_email','contato_link',
-        'contato_telefone', 'requisitos','descricao','observacoes','user_id','vaga_aprovada'];
+        'contato_telefone', 'requisitos','descricao','observacoes','user_id','tipo', 'vaga_status'];
+    
+    public function cursos()
+    {
+        return $this->belongsToMany(Curso::class, 'vaga_cursos', 'vaga_id', 'curso_id');
+    }
 }

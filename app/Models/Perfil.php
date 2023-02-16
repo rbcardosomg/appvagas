@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-enum Perfil
+enum Perfil: string
 {
-    case ADMIN;
-    case SETOR_ESTAGIO;
-    case SETOR_ENSINO;
-    case EMPRESA;
+    case ADMIN = 'Admin';
+    case SETOR_ESTAGIO = 'Setor de estágio';
+    case SETOR_ENSINO = 'Setor de ensino';
+    case EMPRESA = 'Empresa';
 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
     }
 }

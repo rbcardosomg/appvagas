@@ -19,7 +19,7 @@
                             </div>
                             <div class="mb-3">
                             <label  class="form-label">Situação da vaga: </label>
-                            <input type="text" class="form-control" name="data_limite_procura" value="{{ $vaga->vaga_aprovada }}">
+                            <input type="text" class="form-control" name="data_limite_procura" value="{{ $vaga->vaga_status }}">
                             </div>                     
                     </fieldset>
                     <a href="{{ url()->previous() }}" class="btn btn-primary">Voltar</a>                    

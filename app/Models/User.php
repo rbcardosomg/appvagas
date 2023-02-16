@@ -62,6 +62,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasPerfil(Perfil $perfil): bool
     {
-        return $this->perfil === $perfil->getName();
+        return $this->perfil === $perfil->name;
     }
+
+    /* public function _perfil()
+    {
+        $perfis = Perfil::cases();
+        return match($this->perfil{$perfis};
+    } */
 }

@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'rafael.cardoso@ifmg.edu.br',
             'password' => Hash::make('admin123'),
-            'perfil' => Perfil::ADMIN->getName()
+            'perfil' => Perfil::ADMIN->name
         ]);
     }
 }

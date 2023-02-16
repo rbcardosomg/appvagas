@@ -21,11 +21,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nome</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control" name="email">
+                                    <input type="text" class="form-control" name="email" value="{{ old('email') }}">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Senha</label>
@@ -42,9 +42,9 @@
                                             <option></option>
                                             @foreach ($perfis as $perfil)
                                                 @if ((old('perfil') == $perfil->name))
-                                                    <option value="{{$perfil->name}}" selected>{{$perfil->name}}</option>
+                                                    <option value="{{$perfil->name}}" selected>{{$perfil->value}}</option>
                                                 @else
-                                                    <option value="{{$perfil->name}}">{{$perfil->name}}</option>
+                                                    <option value="{{$perfil->name}}">{{$perfil->value}}</option>
                                                 @endif
                                             @endforeach
                                         </select>

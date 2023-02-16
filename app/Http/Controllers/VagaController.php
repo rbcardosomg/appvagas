@@ -7,6 +7,7 @@ use App\Mail\NovaOportunidadeMail;
 use App\Models\Curso;
 use App\Models\Perfil;
 use App\Models\Vaga;
+use App\Models\VagaTipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -38,7 +39,8 @@ class VagaController extends Controller
     public function create()
     {
         $cursos = Curso::all();
-        return view('admin.vaga.create', ['cursos'=>$cursos]);
+        $vaga_tipos = [VagaTipo::estagio, VagaTipo::emprego];
+        return view('admin.vaga.create', ['cursos'=>$cursos, 'vaga_tipos'=>$vaga_tipos]);
     }
 
     /**
@@ -49,17 +51,27 @@ class VagaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo' => 'required',
+            'cursos' => 'required'
+        ]);
+
         $dados = $request->all();
-        $cursos = $request->cursos;
         $dados['user_id'] = auth()->user()->id;
-        $dados['vaga_aprovada'] = 'Em análise';
+        $dados['vaga_status'] = 'Em análise';
+        
+        $cursos = null;
+        foreach ($request->cursos as $id) {
+            $cursos[] = Curso::findOrFail($id);
+        }
         
         $vaga = Vaga::create($dados);
+        $vaga->cursos()->saveMany($cursos);
         //$destinario = auth()->user()->email; //e-mail do usuário logado (autenticado)
-        $destinario='rafael.cardoso@ifmg.edu.br';
-        Mail::to($destinario)->send(new NovaOportunidadeMail($vaga));
+        //$destinario='rafael.cardoso@ifmg.edu.br';
+        //Mail::to($destinario)->send(new NovaOportunidadeMail($vaga));
 
-        return redirect()->route('admin.vaga.show', ['vaga' => $vaga->id]);
+        return redirect()->route('vaga.show', ['vaga' => $vaga->id]);
     }
 
     /**
@@ -68,8 +80,9 @@ class VagaController extends Controller
      * @param  \App\Models\Vaga  $vaga
      * @return \Illuminate\Http\Response
      */
-    public function show(Vaga $vaga)
+    public function show($id)
     {
+        $vaga = Vaga::findOrFail($id);
         return view('admin.vaga.show', ['vaga' => $vaga]);
     }
 
@@ -79,15 +92,17 @@ class VagaController extends Controller
      * @param  \App\Models\Vaga  $vaga
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vaga $vaga)
+    public function edit($id)
     {
-        //$cursos = Curso::all();
+        $vaga = Vaga::findOrFail($id);
+        $cursos = Curso::all();
+        $vaga_tipos = [VagaTipo::estagio, VagaTipo::emprego];
 
-        if($vaga->user_id != auth()->user()->id) {
+        /* if($vaga->user_id != auth()->user()->id) {
             return view('acesso-negado');
-        }
+        } */
 
-        return view('admin.vaga.edit', ['vaga' => $vaga]);       
+        return view('admin.vaga.edit', ['vaga' => $vaga,'cursos'=>$cursos,'vaga_tipos'=>$vaga_tipos]);       
     }
 
     /**
@@ -97,20 +112,36 @@ class VagaController extends Controller
      * @param  \App\Models\Vaga  $vaga
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vaga $vaga)
+    public function update(Request $request, $id)
     {
-       
-        if($vaga->user_id != auth()->user()->id) {
-            return view('acesso-negado');
-        }       
+        $request->validate([
+            'tipo' => 'required',
+            'cursos' => 'required'
+        ]);
+
+        $vaga = Vaga::findOrFail($id);
+
+        $dados = $request->all();
+        $dados['vaga_status'] = 'Em análise';
         
-        $vaga->update($request->all());
+        $cursos = null;
+        foreach ($request->cursos as $id) {
+            $cursos[] = Curso::findOrFail($id);
+        }
+        
+        $vaga->update($dados);
+        $vaga->cursos()->saveMany($cursos);
+
+        /* if($vaga->user_id != auth()->user()->id) {
+            return view('acesso-negado');
+        } */
 
         //$destinario = auth()->user()->email; //e-mail do usuário logado (autenticado)
-        $destinario='rafael.cardoso@ifmg.edu.br';
-        Mail::to($destinario)->send(new NovaOportunidadeMail($vaga));
+        //$destinario='rafael.cardoso@ifmg.edu.br';
+        //Mail::to($destinario)->send(new NovaOportunidadeMail($vaga));
 
-        return redirect()->route('admin.vaga.show', ['vaga'=> $vaga->id]);
+        //return redirect()->route('vaga.show', ['vaga'=> $vaga->id]);
+        return redirect()->route('vaga.index');
     }
 
     /**

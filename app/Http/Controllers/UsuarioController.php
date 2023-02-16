@@ -19,8 +19,7 @@ class UsuarioController extends Controller
         if(auth()->user()->isAdmin())
             $usuarios = User::paginate();
         else
-            $usuarios = User::where('perfil', Perfil::SETOR_ENSINO->getName())->paginate();
-        
+            $usuarios = User::where('perfil', Perfil::SETOR_ENSINO->name)->paginate();
         return view('admin.usuario.index', ['usuarios'=>$usuarios]);
     }
 
@@ -43,17 +42,19 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        if(auth()->user()->perfil == Perfil::SETOR_ESTAGIO->name)
+            $request->merge(['perfil' => Perfil::SETOR_ENSINO->name]);
+        
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
             'perfil' => 'required',
             'password' => 'required|confirmed'
         ]);
-
-        $fields = $request->all();
-        $fields['password'] = Hash::make($fields['password']);
-
-        User::create($fields);
+        
+        $request->merge(['password' => Hash::make($request['password'])]);
+            
+        User::create($request->all());
         return redirect(route('usuario.index'));
     }
 

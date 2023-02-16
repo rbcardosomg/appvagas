@@ -16,7 +16,7 @@ class CreateVagasTable extends Migration
         Schema::create('vagas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->char('tipo',1);
+            $table->string('tipo',15);
             $table->string('area_atuacao', 200);        
             $table->string('remuneracao', 200)->nullable();
             $table->string('contato_email', 200)->nullable();
@@ -26,7 +26,7 @@ class CreateVagasTable extends Migration
             $table->text('requisitos')->nullable();
             $table->text('descricao')->nullable();
             $table->string('observacoes')->nullable();
-            $table->boolean('vaga_aprovada')->default(false);
+            $table->string('vaga_status', 50);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

@@ -25,7 +25,7 @@
                                 <th scope="row">{{ $e['id'] }}</th>
                                 <td>{{ $e['area_atuacao'] }}</td>                                
                                 <td>{{ date('d/m/Y',strtotime($e['data_limite_procura'])) }}</td>
-                                <td>{{$e['vaga_aprovada']}}
+                                <td>{{$e['vaga_status']}}
                                 <td><a href="{{ route('vaga.edit', $e['id']) }}">Editar</a></td>
                                 <td>
                                   <form id="form_{{$e['id']}}" method="post" action="{{ route('vaga.destroy', ['vaga' =>$e['id']]) }}">

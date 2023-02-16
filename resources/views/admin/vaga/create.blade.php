@@ -11,6 +11,25 @@
 
                 <form method="POST" action="{{ route('vaga.store') }}">
                     @csrf
+
+                    <div class="card mb-3">
+                        <div class="card-header">Qual é o tipo da vaga?</div>
+                        <div class="card-body">
+                            <div class="mb-3 row">
+                                <div class="col">
+                                    @foreach ($vaga_tipos as $tipo)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="tipo" value="{{$tipo->name}}" id="{{$tipo->name}}" required>
+                                            <label class="form-check-label" for="{{$tipo->name}}">
+                                                {{$tipo->getName()}}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div> <!-- fim col -->
+                            </div><!-- fim row -->
+                        </div>
+                    </div>
+
                     <div class="card mb-3">
                         <div class="card-header">A vaga está direcionada ao(s) curso(s): *</div>
                         <div class="card-body">
