@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('perfil',15);
             $table->foreign('empresa_id')->references('id')->on('empresas');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

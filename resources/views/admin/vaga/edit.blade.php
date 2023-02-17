@@ -107,7 +107,11 @@
                         </div><!-- fim card body -->
                     </div><!-- fim card  -->
 
-                    <button type="submit" class="btn btn-primary float-end">Atualizar</button>
+                    @can('estagio')
+                        <button type="submit" class="btn btn-warning float-end m-2" name="aprovar" onclick="return confirm('Deseja realmente aprovar?')">Aprovar</button>
+                    @endcan
+                    
+                    <button type="submit" class="btn btn-primary float-end m-2">Atualizar</button>
                 </form>
             </div>
         </div>

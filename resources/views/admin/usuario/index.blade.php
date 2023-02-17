@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class="card">
         <div class="card-header" style="background-color: #ffcb6b;" >Usuários<a href="{{route('usuario.create')}}" class="m-2">Novo</a></div>
           <div class="card-body">
@@ -24,7 +24,7 @@
                     <th scope="row">{{ $usuario['id'] }}</th>
                     <td>{{ $usuario->name }}</td>                                
                     <td>{{ $usuario->email }}</td>
-                    <td>{{ $usuario->perfil }}
+                    <td>{{ $usuario->getPerfil()->value }}
                     <td><a href="{{ route('usuario.edit', $usuario->id) }}">Editar</a></td>
                     <td>
                       <form id="form_{{ $usuario->id }}" method="post" action="{{ route('usuario.destroy', ['usuario' =>$usuario->id]) }}">

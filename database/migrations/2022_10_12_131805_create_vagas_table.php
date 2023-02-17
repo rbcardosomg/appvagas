@@ -28,6 +28,7 @@ class CreateVagasTable extends Migration
             $table->string('observacoes')->nullable();
             $table->string('vaga_status', 50);
             $table->foreign('user_id')->references('id')->on('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

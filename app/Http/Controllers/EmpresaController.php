@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\Perfil;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,17 +16,16 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        $empresa_id = auth()->user()->empresa_id;
-        
+        $empresas = Empresa::paginate();
+        return view('admin.empresa.index', ['empresas'=>$empresas]);
+        /* $empresa_id = auth()->user()->empresa_id;
         $empresa= Empresa::where('id', $empresa_id)->get();
-        
-        
         
         if (is_null($empresa_id)){
             return view('admin.empresa.create');            
         } else {
             return view('admin.empresa.index', ['empresa'=>$empresa]);
-        }
+        } */
     }
 
     /**
@@ -49,16 +49,36 @@ class EmpresaController extends Controller
         $dados = $request->all();       
         $empresa = Empresa::create($dados);
 
-        $user_id = auth()->user()->id;
-        
-        $userfind = User::find($user_id);
-        
+        $user = auth()->user();
+        if($user->hasPerfil(Perfil::EMPRESA))
+        {
+            $empresa->_usuario()->save($user);
+            return redirect()->route('admin.home');
+            //return redirect()->route('empresa.show', ['empresa' => $empresa->id]);
+        }else
+        {
+            $perfis = [Perfil::EMPRESA];
+            return view('admin.empresa.usuario.create', ['empresa' => $empresa->id,'perfis'=>$perfis]);
+        }
 
+        /* $user_id = auth()->user()->id;
+        $userfind = User::find($user_id);
         $userfind->fill(['empresa_id'=>$empresa->id]);
-        $userfind->save();
-       
-        return redirect()->route('admin.empresa.show', ['empresa' => $empresa->id]);    
-           
+        $userfind->save(); */
+    }
+
+    public function userStore(Request $request)
+    {
+        $userController = new UsuarioController();
+        if($userController->store($request))
+        {
+            return redirect()->route('empresa.index');
+        }
+        
+        /* $user_id = auth()->user()->id;
+        $userfind = User::find($user_id);
+        $userfind->fill(['empresa_id'=>$empresa->id]);
+        $userfind->save(); */
     }
 
     /**
@@ -78,9 +98,9 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empresa $empresa)
+    public function edit($id)
     {
-               
+        $empresa = Empresa::findOrFail($id);
         return view('admin.empresa.edit', ['empresa' => $empresa]);
     }
 
@@ -91,15 +111,17 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, $id)
     {
-        if($empresa->user_id != auth()->user()->id) {
-            return view('acesso-negado');
-        }       
-        
+        $empresa = Empresa::findOrFail($id);
         $empresa->update($request->all());
 
-        return redirect()->route('admin.empresa.show', ['empresa'=> $empresa->id]);
+        if(auth()->user()->hasPerfil(Perfil::EMPRESA))
+            $route = 'admin.home';
+        else
+            $route = 'empresa.index';
+
+        return redirect()->route($route);
     }
 
     /**

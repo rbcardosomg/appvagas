@@ -6,12 +6,13 @@ use App\Notifications\RedefinirSenhaNotification;
 use App\Notifications\VerificarEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -60,14 +61,24 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasPerfil(Perfil::ADMIN);
     }
 
+    public function isEmpresa(): bool
+    {
+        return $this->hasPerfil(Perfil::EMPRESA);
+    }
+
     public function hasPerfil(Perfil $perfil): bool
     {
         return $this->perfil === $perfil->name;
     }
 
-    /* public function _perfil()
+    public function getPerfil(): Perfil
     {
         $perfis = Perfil::cases();
-        return match($this->perfil{$perfis};
-    } */
+        $user_perfil = null;
+        foreach ($perfis as $perfil) {
+            if($this->perfil == $perfil->name)
+            $user_perfil = $perfil;
+        }
+        return $user_perfil;
+    }
 }

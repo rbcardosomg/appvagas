@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('principal');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::prefix('admin')
         ->middleware('auth')
@@ -26,6 +26,7 @@ Route::prefix('admin')
     Route::resource('vaga', VagaController::class)->middleware('can:vaga');
     Route::resource('empresa', EmpresaController::class)->middleware('can:empresa');
     Route::resource('usuario', UsuarioController::class)->middleware('can:usuario');
+    Route::post('userStore', [EmpresaController::class,'userStore'])->middleware('can:usuario')->name('empresa.usuario.store');
 });
 
 Route::get('/mensagem-app', function() {

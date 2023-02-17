@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perfil;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,6 +14,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $user = auth()->user();
+        if($user->hasPerfil(Perfil::EMPRESA) && !isset($user->empresa_id))
+            return redirect()->route('empresa.create');
+        else
+            return view('admin.home');
     }
 }

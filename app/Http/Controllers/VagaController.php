@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 //use Mail;
-use App\Mail\NovaOportunidadeMail;
 use App\Models\Curso;
 use App\Models\Perfil;
 use App\Models\Vaga;
 use App\Models\VagaTipo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class VagaController extends Controller
 {    
@@ -122,7 +120,11 @@ class VagaController extends Controller
         $vaga = Vaga::findOrFail($id);
 
         $dados = $request->all();
-        $dados['vaga_status'] = 'Em análise';
+
+        if(auth()->user()->hasPerfil(Perfil::SETOR_ESTAGIO) && $request->has('aprovar'))
+            $dados['vaga_status'] = 'Aprovado';
+        else
+            $dados['vaga_status'] = 'Em análise';
         
         $cursos = null;
         foreach ($request->cursos as $id) {

@@ -24,6 +24,7 @@ class CreateEmpresasTable extends Migration
             $table->string('numero', 50);
             $table->string('cidade', 150);
             $table->string('estado', 50);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

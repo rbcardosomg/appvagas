@@ -42,7 +42,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        if(auth()->user()->perfil == Perfil::SETOR_ESTAGIO->name)
+        if(auth()->user()->hasPerfil(Perfil::SETOR_ESTAGIO))
             $request->merge(['perfil' => Perfil::SETOR_ENSINO->name]);
         
         $request->validate([
