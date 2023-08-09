@@ -113,6 +113,12 @@
                                     </li>
                                 @endcan
 
+                                @can('curso')
+                                    <li class="nav-item">
+                                        <a  class="nav-link" href="{{ route('curso.index') }}" ><i class="fa fa-book"></i>Cursos</a>
+                                    </li>
+                                @endcan
+
                                 <li class="nav-item">
                                     <a  class="nav-link" href="#" ></i>|</a>
                                 </li>

@@ -17,43 +17,43 @@ class CursoSeeder extends Seeder
         $cursos= [
             [
                 'nome' => 'Bacharelado em Administração',
-                'tipo' => 'Superior',
+                'tipo' => 'superior',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nome' => 'Bacharelado em Ciência da Computação',
-                'tipo' => 'Superior',
+                'tipo' => 'superior',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nome' => 'Bacharelado em Engenharia Elétrica',
-                'tipo' => 'Superior',
+                'tipo' => 'superior',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nome' => 'Licenciatura em Matemática',
-                'tipo' => 'Superior',
+                'tipo' => 'superior',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nome' => 'Técnico em Administração',
-                'tipo' => 'Técnico',
+                'tipo' => 'tecnico',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nome' => 'Técnico em Eletroténica',
-                'tipo' => 'Técnico',
+                'tipo' => 'tecnico',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nome' => 'Técnico em Informática',
-                'tipo' => 'Técnico',
+                'tipo' => 'tecnico',
                 'created_at' => now(),
                 'updated_at' => now()
             ]

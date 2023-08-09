@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-enum VagaTipo
+enum VagaTipo:string
 {
-    case estagio;
-    case emprego;
+    case estagio = 'Estágio';
+    case emprego = 'Emprego';
 
-    public function getName(): string
+    public static function get(string $value): string
     {
-        return $this->name != 'estagio' ? $this->name : 'estágio';
+        foreach (VagaTipo::cases() as $vaga_tipo) {
+            if($vaga_tipo->name == $value)
+                return $vaga_tipo->value;
+        }
     }
 }

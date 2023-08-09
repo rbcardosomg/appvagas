@@ -37,7 +37,7 @@ class VagaController extends Controller
     public function create()
     {
         $cursos = Curso::all();
-        $vaga_tipos = [VagaTipo::estagio, VagaTipo::emprego];
+        $vaga_tipos = VagaTipo::cases();
         return view('admin.vaga.create', ['cursos'=>$cursos, 'vaga_tipos'=>$vaga_tipos]);
     }
 
@@ -94,7 +94,7 @@ class VagaController extends Controller
     {
         $vaga = Vaga::findOrFail($id);
         $cursos = Curso::all();
-        $vaga_tipos = [VagaTipo::estagio, VagaTipo::emprego];
+        $vaga_tipos = VagaTipo::cases();
 
         /* if($vaga->user_id != auth()->user()->id) {
             return view('acesso-negado');

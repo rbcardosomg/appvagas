@@ -21,7 +21,7 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="tipo" value="{{$tipo->name}}" id="{{$tipo->name}}" required>
                                             <label class="form-check-label" for="{{$tipo->name}}">
-                                                {{$tipo->getName()}}
+                                                {{$tipo->value}}
                                             </label>
                                         </div>
                                     @endforeach
