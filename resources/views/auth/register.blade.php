@@ -5,9 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header" style="background-color: #ffcb6b;">{{ __('Cadastre-se') }}</div>
+                <div class="card-header fw-bold" style="background-color: #ffd978;">{{ __('.: Cadastre-se para oferecer suas vagas de estágio e emprego') }}</div>
 
                 <div class="card-body">
+                    
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

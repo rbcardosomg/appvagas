@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header" style="background-color: #ffcb6b;" >Usuários<a href="{{route('usuario.create')}}" class="m-2">Novo</a></div>
+        <div class="card-header" style="background-color: #ffcb6b;" >Usuários <a class="btn btn-primary" href="{{route('usuario.create')}}" class="m-2">Novo</a></div>
           <div class="card-body">
             <table class="table table-hover">
               <thead>
@@ -25,13 +25,13 @@
                     <td>{{ $usuario->name }}</td>                                
                     <td>{{ $usuario->email }}</td>
                     <td>{{ $usuario->getPerfil()->value }}
-                    <td><a href="{{ route('usuario.edit', $usuario->id) }}">Editar</a></td>
+                    <td><a class="btn btn-warning" href="{{ route('usuario.edit', $usuario->id) }}">Editar</a></td>
                     <td>
                       <form id="form_{{ $usuario->id }}" method="post" action="{{ route('usuario.destroy', ['usuario' =>$usuario->id]) }}">
                         @method('DELETE')
                         @csrf
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir este usuário?');">Excluir</a>
                       </form>
-                      <a href="#" onclick="document.getElementById('form_{{ $usuario->id }}').submit()">Excluir</a>
                     </td>                         
                   </tr>    
                 @endforeach

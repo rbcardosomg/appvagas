@@ -10,6 +10,7 @@ use App\Models\Vaga;
 class NovaOportunidadeMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $area_atuacao;
     public $data_limite_procura;
     public $url;
@@ -22,7 +23,7 @@ class NovaOportunidadeMail extends Mailable
     {
         $this->area_atuacao = $vaga->area_atuacao;
         $this->data_limite_procura = date('d/m/Y', strtotime($vaga->data_limite_procura));
-        $this->url = 'http://appvagas.develop/vaga/'.$vaga->id;
+        $this->url = env('APP_URL').'/admin/vaga/'.$vaga->id.'/edit';
     }
 
     /**

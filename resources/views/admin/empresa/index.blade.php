@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header" style="background-color: #ffcb6b;">Empresa <a href="{{route('empresa.create')}}" class="m-2">Nova</a></div>
+                    <div class="card-header" style="background-color: #ffcb6b;">Empresa <a class="btn btn-primary" href="{{route('empresa.create')}}" class="m-2">Nova</a></div>
                     <div class="card-body">
                         <table class="table table-hover">
                             <thead>
@@ -29,7 +29,7 @@
                                     <td>{{$empresa->area_atuacao_empresa }}
                                     <td>{{$empresa->getEndereco() }}
                                     <td>{{$empresa->telefone }}
-                                    <td><a href="{{ route('empresa.edit', $empresa->id) }}">Editar</a></td>                                                  
+                                    <td><a class="btn btn-warning" href="{{ route('empresa.edit', $empresa->id) }}">Editar</a></td>                                                  
                                 </tr>    
                                 @endforeach
                             </tbody>

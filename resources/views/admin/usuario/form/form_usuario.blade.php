@@ -42,7 +42,7 @@
                             </select>
                         </div>
                     @endcan
-                    @if (!auth()->user()->isAdmin())
+                    @if (!auth()->user()->isAdmin() && isset($usuario))
                         <input type="hidden" name="perfil" value="{{ $usuario->perfil }}">
                     @endif
                 </div> <!-- fim col -->

@@ -19,4 +19,19 @@ class Vaga extends Model
     {
         return $this->belongsToMany(Curso::class, 'vaga_cursos', 'vaga_id', 'curso_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function _status()
+    {
+        return VagaStatus::get($this->vaga_status);
+    }
+
+    public function _tipo()
+    {
+        return VagaTipo::get($this->tipo);
+    }
 }

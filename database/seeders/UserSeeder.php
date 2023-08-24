@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin',
-            'email' => 'rafael.cardoso@ifmg.edu.br',
+            'email' => 'rogerio.canto@ifmg.edu.br',
             'password' => Hash::make('admin123'),
             'perfil' => Perfil::ADMIN->name
         ]);

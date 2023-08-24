@@ -107,11 +107,12 @@
                         </div><!-- fim card body -->
                     </div><!-- fim card  -->
 
-                    @can('estagio')
-                        <button type="submit" class="btn btn-warning float-end m-2" name="aprovar" onclick="return confirm('Deseja realmente aprovar?')">Aprovar</button>
+                    @can('aprovar-vaga')
+                        <button type="submit" class="btn btn-warning float-end m-2" name="aprovar" value="aprovar" onclick="return confirm('Deseja realmente aprovar?')">Aprovar</button>
                     @endcan
-                    
                     <button type="submit" class="btn btn-primary float-end m-2">Atualizar</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary float-end m-2">Voltar</a>
+                    
                 </form>
             </div>
         </div>

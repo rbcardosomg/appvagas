@@ -56,6 +56,11 @@ class User extends Authenticatable implements MustVerifyEmail
        $this->notify(new VerificarEmailNotification($this->name));  
     }
 
+    public function vagas()
+    {
+        return $this->hasMany(Vaga::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->hasPerfil(Perfil::ADMIN);
